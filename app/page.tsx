@@ -7,7 +7,7 @@ export default function HomePage() {
         Trouve ton logement à Lomé
       </h1>
       <p className="text-gray-500 text-lg mb-8 max-w-xl mx-auto">
-        Des centaines d'annonces vérifiées. Recherche par quartier, budget, ou type de bien.
+        Des centaines d&apos;annonces vérifiées. Recherche par quartier, budget, ou type de bien.
       </p>
       <Link
         href="/annonces"

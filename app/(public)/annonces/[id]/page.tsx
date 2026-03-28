@@ -3,8 +3,14 @@
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useAnnonce } from "@/hooks/useAnnonces";
 import { formatPrix, formatPeriode, formatDate } from "@/lib/utils";
+
+const AnnonceDetailMap = dynamic(
+  () => import("@/components/annonces/AnnonceDetailMap"),
+  { ssr: false }
+);
 
 export default function AnnonceDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -49,9 +55,11 @@ export default function AnnonceDetailPage() {
         ← Retour aux annonces
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Colonne principale */}
-        <div className="lg:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+        {/* ========== COLONNE PRINCIPALE ========== */}
+        <div className="lg:col-span-3 space-y-6">
+
           {/* Galerie photos */}
           <div className="space-y-3">
             <div className="relative h-80 w-full rounded-xl overflow-hidden bg-gray-100">
@@ -63,11 +71,10 @@ export default function AnnonceDetailPage() {
                 sizes="(max-width: 1024px) 100vw, 66vw"
                 priority
               />
-              <span className={`absolute top-4 left-4 text-xs font-medium px-3 py-1 rounded-full ${
-                annonce.typeOffre === "Location"
+              <span className={`absolute top-4 left-4 text-xs font-medium px-3 py-1 rounded-full ${annonce.typeOffre === "Location"
                   ? "bg-emerald-100 text-emerald-700"
                   : "bg-blue-100 text-blue-700"
-              }`}>
+                }`}>
                 {annonce.typeOffre}
               </span>
             </div>
@@ -79,11 +86,10 @@ export default function AnnonceDetailPage() {
                   <button
                     key={photo.id}
                     onClick={() => setPhotoIndex(index)}
-                    className={`relative h-16 w-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
-                      index === photoIndex
+                    className={`relative h-16 w-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${index === photoIndex
                         ? "border-emerald-500"
                         : "border-transparent hover:border-gray-300"
-                    }`}
+                      }`}
                   >
                     <Image
                       src={photo.url}
@@ -113,9 +119,7 @@ export default function AnnonceDetailPage() {
                 </div>
               </div>
             </div>
-            <p className="text-gray-500 text-sm">
-              📍 {annonce.adresse}
-            </p>
+            <p className="text-gray-500 text-sm">📍 {annonce.adresse}</p>
           </div>
 
           {/* Caractéristiques */}
@@ -143,7 +147,6 @@ export default function AnnonceDetailPage() {
                 </div>
               )}
             </div>
-
             <div className="flex flex-wrap gap-2 mt-4">
               {annonce.estMeuble && (
                 <span className="text-xs bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-100">
@@ -173,6 +176,8 @@ export default function AnnonceDetailPage() {
             </p>
           </div>
 
+
+
           {/* Stats */}
           <div className="flex gap-4 text-xs text-gray-400">
             <span>{annonce.statistiques.nombreVues} vues</span>
@@ -181,10 +186,12 @@ export default function AnnonceDetailPage() {
             <span>·</span>
             <span>Publié le {formatDate(annonce.datePublication)}</span>
           </div>
+
         </div>
 
-        {/* Sidebar contact */}
-        <div className="space-y-4">
+        {/* ========== SIDEBAR ========== */}
+        <div className="lg:col-span-2 space-y-4">
+
           {/* Avance & caution */}
           {(annonce.montantAvance > 0 || annonce.montantCaution > 0) && (
             <div className="bg-white rounded-xl border border-gray-200 p-5">
@@ -221,7 +228,7 @@ export default function AnnonceDetailPage() {
           {/* Contact */}
           <div className="bg-white rounded-xl border border-gray-200 p-5 sticky top-24">
             <h2 className="text-sm font-medium text-gray-700 uppercase tracking-wide mb-4">
-              Contacter l'agent
+              Contacter l&apos;agent
             </h2>
             <button className="w-full bg-emerald-600 text-white py-3 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors mb-3">
               Envoyer un message
@@ -233,6 +240,16 @@ export default function AnnonceDetailPage() {
             )}
             <p className="text-xs text-gray-400 text-center mt-3">
               Expiration le {formatDate(annonce.dateExpiration)}
+            </p>
+          </div>
+          {/* ===== CARTE LOCALISATION ===== */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 className="text-sm font-medium text-gray-700 uppercase tracking-wide mb-3">
+              Localisation
+            </h2>
+            <AnnonceDetailMap annonce={annonce} />
+            <p className="text-xs text-red-700 mt-2">
+              Position Approximative (La position exacte est communiquée après contact avec l&apos;agent.)
             </p>
           </div>
         </div>
