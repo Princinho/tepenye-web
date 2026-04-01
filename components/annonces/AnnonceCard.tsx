@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Annonce } from "@/types";
 import { formatPrix, formatPeriode } from "@/lib/utils";
+import BoutonFavori from "@/components/annonces/BoutonFavori";
 
 interface AnnonceCardProps {
   annonce: Annonce;
@@ -20,20 +23,28 @@ export default function AnnonceCard({ annonce }: AnnonceCardProps) {
             alt={annonce.titre}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-300"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" loading="eager"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            loading="eager"
           />
-          {/* Badge type offre */}
-          <span className={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded-full ${
-            annonce.typeOffre === "Location"
-              ? "bg-emerald-100 text-emerald-700"
-              : "bg-blue-100 text-blue-700"
-          }`}>
+
+          {/* Badge type offre — gauche */}
+          <span
+            className={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded-full z-10 ${
+              annonce.typeOffre === "Location"
+                ? "bg-emerald-100 text-emerald-700"
+                : "bg-blue-100 text-blue-700"
+            }`}
+          >
             {annonce.typeOffre}
           </span>
-          {/* Badge type bien */}
-          <span className="absolute top-3 right-3 text-xs font-medium px-2 py-1 rounded-full bg-white/90 text-gray-700">
+
+          {/* Badge type bien — bas gauche pour laisser la place au ♡ */}
+          <span className="absolute bottom-3 left-3 text-xs font-medium px-2 py-1 rounded-full bg-white/90 text-gray-700 z-10">
             {annonce.typeBien}
           </span>
+
+          {/* Bouton favori — haut droite */}
+          <BoutonFavori annonceId={annonce.id} variante="card" />
         </div>
 
         {/* Contenu */}
@@ -54,14 +65,15 @@ export default function AnnonceCard({ annonce }: AnnonceCardProps) {
           </h3>
 
           {/* Quartier */}
-          <p className="text-xs text-gray-500 mb-3">
-            📍 {annonce.quartier}
-          </p>
+          <p className="text-xs text-gray-500 mb-3">📍 {annonce.quartier}</p>
 
           {/* Caractéristiques */}
           <div className="flex items-center gap-3 text-xs text-gray-600 border-t border-gray-100 pt-3">
             {annonce.nombrePieces > 0 && (
-              <span>{annonce.nombrePieces} pièce{annonce.nombrePieces > 1 ? "s" : ""}</span>
+              <span>
+                {annonce.nombrePieces} pièce
+                {annonce.nombrePieces > 1 ? "s" : ""}
+              </span>
             )}
             {annonce.nombreSanitaires > 0 && (
               <span>{annonce.nombreSanitaires} sdb</span>
@@ -69,12 +81,8 @@ export default function AnnonceCard({ annonce }: AnnonceCardProps) {
             {annonce.estMeuble && (
               <span className="text-emerald-600">Meublé</span>
             )}
-            {annonce.aClimatisation && (
-              <span>❄️ Clim</span>
-            )}
-            {annonce.aGarage && (
-              <span>🚗 Garage</span>
-            )}
+            {annonce.aClimatisation && <span>❄️ Clim</span>}
+            {annonce.aGarage && <span>🚗 Garage</span>}
           </div>
         </div>
       </div>

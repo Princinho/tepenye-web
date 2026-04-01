@@ -387,7 +387,7 @@
       "masquerTelephone": false,
       "datePublication": "2026-03-28T12:33:24.115Z",
       "dateExpiration": "2026-04-11T12:33:24.115Z",
-      "auteurId": "u1",
+      "auteurId": "u1774853775942",
       "medias": [
         {
           "id": "m1774701204114-0",
@@ -429,7 +429,7 @@
       "telephone": "+22890112233",
       "typeUtilisateur": "Agent",
       "estVerifie": true,
-      "soldeCredits": 45,
+      "soldeCredits": 42,
       "abonne": false,
       "dateInscription": "2025-12-01T00:00:00Z"
     },
@@ -440,7 +440,7 @@
       "telephone": "+22891223344",
       "typeUtilisateur": "Agent",
       "estVerifie": true,
-      "soldeCredits": 12,
+      "soldeCredits": 11,
       "abonne": false,
       "dateInscription": "2026-01-15T00:00:00Z"
     },
@@ -454,9 +454,105 @@
       "soldeCredits": 120,
       "abonne": true,
       "dateInscription": "2025-11-10T00:00:00Z"
+    },
+    {
+      "id": "u1774852680021",
+      "nom": "Gatien GNAKOU",
+      "email": "princegnakou@gmail.com",
+      "telephone": "",
+      "typeUtilisateur": "Client",
+      "estVerifie": false,
+      "soldeCredits": 10,
+      "abonne": false,
+      "dateInscription": "2026-03-30T06:38:00.021Z"
+    },
+    {
+      "id": "u1774853775942",
+      "nom": "Gatien Gnakou",
+      "email": "princinho94@gmail.com",
+      "telephone": "",
+      "typeUtilisateur": "Agent",
+      "estVerifie": false,
+      "soldeCredits": 10,
+      "abonne": false,
+      "dateInscription": "2026-03-30T06:56:42.023Z"
     }
   ],
-  "favoris": [],
-  "messages": [],
-  "transactions_credits": []
+  "favoris": [
+    {
+      "id": "f1774941857733",
+      "utilisateurId": "u1774853775942",
+      "annonceId": "2",
+      "dateAjout": "2026-03-31T07:24:17.733Z"
+    },
+    {
+      "id": "f1774941880533",
+      "utilisateurId": "u1774853775942",
+      "annonceId": "1",
+      "dateAjout": "2026-03-31T07:24:40.533Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg1774941893507",
+      "annonceId": "1",
+      "expediteurId": "u1774853775942",
+      "contenu": "Hello! Est-ce disponible?",
+      "envoyeLe": "2026-03-31T07:24:53.507Z",
+      "estLu": false,
+      "dateLecture": null,
+      "supprimeParExpediteur": false,
+      "supprimeParDestinataire": false
+    },
+    {
+      "id": "msg1774942780292",
+      "annonceId": "1",
+      "expediteurId": "u1774853775942",
+      "contenu": "aseaasdasd",
+      "envoyeLe": "2026-03-31T07:39:40.292Z",
+      "estLu": false,
+      "dateLecture": null,
+      "supprimeParExpediteur": false,
+      "supprimeParDestinataire": false
+    }
+  ],
+  "transactions_credits": [
+    {
+      "id": "tx1774942651122",
+      "utilisateurId": "u1",
+      "montant": -1,
+      "type": "Consommation",
+      "motif": "Affichage numéro client",
+      "annonceId": "1",
+      "date": "2026-03-31T07:37:31.122Z"
+    },
+    {
+      "id": "tx1774942749290",
+      "utilisateurId": "u1",
+      "montant": -1,
+      "type": "Consommation",
+      "motif": "Affichage numéro client",
+      "annonceId": "1",
+      "date": "2026-03-31T07:39:09.290Z"
+    },
+    {
+      "id": "tx1774943202952",
+      "utilisateurId": "u1",
+      "montant": -1,
+      "type": "Consommation",
+      "motif": "Affichage numéro client",
+      "annonceId": "1",
+      "date": "2026-03-31T07:46:42.952Z"
+    },
+    {
+      "id": "tx1774943228943",
+      "utilisateurId": "u2",
+      "montant": -1,
+      "type": "Consommation",
+      "motif": "Affichage numéro client",
+      "annonceId": "2",
+      "date": "2026-03-31T07:47:08.943Z"
+    }
+  ],
+  "sessions": []
 }

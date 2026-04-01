@@ -1,10 +1,71 @@
 "use client";
 
-import { Map, AdvancedMarker, Pin, InfoWindow, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
-import { useState } from "react";
+import {
+  Map,
+  AdvancedMarker,
+  InfoWindow,
+  useAdvancedMarkerRef,
+  useMap,
+} from "@vis.gl/react-google-maps";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { Annonce } from "@/types";
 import { formatPrix, formatPeriode } from "@/lib/utils";
+import type { ZoneRecherche } from "@/hooks/useAnnoncesFilters";
+
+// Composant interne pour gérer le recentrage et le cercle
+function MapController({ zone }: { zone: ZoneRecherche | null }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !zone) return;
+
+    // Recentre sur la zone
+    map.setCenter({ lat: zone.lat, lng: zone.lng });
+    map.setZoom(Math.max(11, Math.round(14 - Math.log2(zone.rayonKm))));
+
+    // Dessine le cercle via l'API Google Maps native
+    const cercle = new google.maps.Circle({
+      map,
+      center: { lat: zone.lat, lng: zone.lng },
+      radius: zone.rayonKm * 1000,
+      fillColor: "#3b82f6",
+      fillOpacity: 0.08,
+      strokeColor: "#3b82f6",
+      strokeOpacity: 0.5,
+      strokeWeight: 2,
+    });
+
+    // Marqueur central pour le point de référence
+    const marqueurCentre = new google.maps.Marker({
+      map,
+      position: { lat: zone.lat, lng: zone.lng },
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
+        fillColor: "#3b82f6",
+        fillOpacity: 1,
+        strokeColor: "#ffffff",
+        strokeWeight: 2,
+      },
+      title: zone.label,
+    });
+
+    return () => {
+      cercle.setMap(null);
+      marqueurCentre.setMap(null);
+    };
+  }, [map, zone]);
+
+  // Recentre sur Lomé si pas de zone
+  useEffect(() => {
+    if (!map || zone) return;
+    map.setCenter({ lat: 6.1375, lng: 1.2123 });
+    map.setZoom(13);
+  }, [map, zone]);
+
+  return null;
+}
 
 interface MarkerWithInfoProps {
   annonce: Annonce;
@@ -34,9 +95,10 @@ function MarkerWithInfo({ annonce, isActive, isSelected, onSelect }: MarkerWithI
             fontSize: "11px",
             fontWeight: 600,
             whiteSpace: "nowrap",
-            boxShadow: isActive || isSelected
-              ? "0 4px 12px rgba(5,150,105,0.4)"
-              : "0 2px 6px rgba(0,0,0,0.15)",
+            boxShadow:
+              isActive || isSelected
+                ? "0 4px 12px rgba(5,150,105,0.4)"
+                : "0 2px 6px rgba(0,0,0,0.15)",
             transform: isActive || isSelected ? "scale(1.15)" : "scale(1)",
             transition: "all 0.15s",
             cursor: "pointer",
@@ -47,10 +109,7 @@ function MarkerWithInfo({ annonce, isActive, isSelected, onSelect }: MarkerWithI
       </AdvancedMarker>
 
       {isSelected && marker && (
-        <InfoWindow
-          anchor={marker}
-          onCloseClick={() => onSelect(null)}
-        >
+        <InfoWindow anchor={marker} onCloseClick={() => onSelect(null)}>
           <div style={{ minWidth: "180px", fontFamily: "sans-serif" }}>
             <p style={{ fontWeight: 600, fontSize: "13px", marginBottom: "4px", color: "#111827" }}>
               {annonce.titre}
@@ -90,9 +149,10 @@ function MarkerWithInfo({ annonce, isActive, isSelected, onSelect }: MarkerWithI
 interface AnnoncesMapProps {
   annonces: Annonce[];
   annonceActiveId: string | null;
+  zone: ZoneRecherche | null;
 }
 
-export default function AnnoncesMap({ annonces, annonceActiveId }: AnnoncesMapProps) {
+export default function AnnoncesMap({ annonces, annonceActiveId, zone }: AnnoncesMapProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
@@ -102,8 +162,9 @@ export default function AnnoncesMap({ annonces, annonceActiveId }: AnnoncesMapPr
       defaultZoom={13}
       style={{ width: "100%", height: "100%", borderRadius: "12px" }}
       gestureHandling="greedy"
-      disableDefaultUI={false}
     >
+      <MapController zone={zone} />
+
       {annonces.map((annonce) => (
         <MarkerWithInfo
           key={annonce.id}

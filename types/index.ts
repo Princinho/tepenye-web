@@ -88,3 +88,26 @@ export interface PagedResponse<T> {
   page: number;
   limit: number;
 }
+export interface LoginPayload {
+  email: string;
+  motDePasse: string;
+}
+
+export interface RegisterPayload {
+  nom: string;
+  email: string;
+  telephone: string;
+  motDePasse: string;
+  typeUtilisateur: "Client" | "Agent" | "Agence";
+}
+
+export interface AuthResponse {
+  token: string;
+  utilisateur: Utilisateur;
+}
+
+export interface AuthState {
+  utilisateur: Utilisateur | null;
+  token: string | null;
+  estConnecte: boolean;
+}
