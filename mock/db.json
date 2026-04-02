@@ -386,7 +386,7 @@
       "etage": 0,
       "masquerTelephone": false,
       "datePublication": "2026-03-28T12:33:24.115Z",
-      "dateExpiration": "2026-04-11T12:33:24.115Z",
+      "dateExpiration": "2026-04-15T15:14:47.674Z",
       "auteurId": "u1774853775942",
       "medias": [
         {
@@ -409,6 +409,66 @@
         },
         {
           "id": "m1774701204114-3",
+          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+          "typeMedia": "image",
+          "ordreAffichage": 4
+        }
+      ],
+      "statistiques": {
+        "nombreVues": 0,
+        "nombreFavoris": 0,
+        "nombreClicsContact": 0
+      }
+    },
+    {
+      "id": "1775029331432",
+      "titre": "Mini villa Attiegou",
+      "description": "Belle villa dallee a attiegou au bord du contournement pres de l'ecole la raison",
+      "prix": 95000,
+      "periodePaiementJours": 30,
+      "prixMensuelNormalise": 95000,
+      "montantAvance": 300000,
+      "montantCaution": 300000,
+      "typeBien": "Maison",
+      "typeOffre": "Location",
+      "statutAnnonce": "Active",
+      "adresse": "Pres de l'ecole la raison",
+      "quartier": "Attiegou",
+      "localisation": {
+        "lat": 6.1953966853067355,
+        "lng": 1.2696104657263296
+      },
+      "nombrePieces": 3,
+      "nombreSanitaires": 3,
+      "estMeuble": true,
+      "aClimatisation": false,
+      "aGarage": true,
+      "etage": 0,
+      "masquerTelephone": false,
+      "datePublication": "2026-04-01T07:42:11.432Z",
+      "dateExpiration": "2026-04-15T07:42:11.432Z",
+      "auteurId": "u1",
+      "medias": [
+        {
+          "id": "m1775029331432-0",
+          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+          "typeMedia": "image",
+          "ordreAffichage": 1
+        },
+        {
+          "id": "m1775029331432-1",
+          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+          "typeMedia": "image",
+          "ordreAffichage": 2
+        },
+        {
+          "id": "m1775029331432-2",
+          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+          "typeMedia": "image",
+          "ordreAffichage": 3
+        },
+        {
+          "id": "m1775029331432-3",
           "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
           "typeMedia": "image",
           "ordreAffichage": 4
@@ -478,20 +538,7 @@
       "dateInscription": "2026-03-30T06:56:42.023Z"
     }
   ],
-  "favoris": [
-    {
-      "id": "f1774941857733",
-      "utilisateurId": "u1774853775942",
-      "annonceId": "2",
-      "dateAjout": "2026-03-31T07:24:17.733Z"
-    },
-    {
-      "id": "f1774941880533",
-      "utilisateurId": "u1774853775942",
-      "annonceId": "1",
-      "dateAjout": "2026-03-31T07:24:40.533Z"
-    }
-  ],
+  "favoris": [],
   "messages": [
     {
       "id": "msg1774941893507",

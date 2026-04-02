@@ -1,6 +1,12 @@
 export type TypeBien = "Villa" | "Maison" | "Appartement" | "Studio" | "Bureau" | "Terrain";
 export type TypeOffre = "Location" | "Vente";
-export type StatutAnnonce = "Active" | "Expiree" | "Brouillon" | "EnCoursValidation";
+export type StatutAnnonce =
+  | "Active"
+  | "Expiree"
+  | "Brouillon"
+  | "EnCoursValidation"
+  | "Archivee"
+  | "Prise";
 export type TypeUtilisateur = "Client" | "Agent" | "Agence";
 export type TypeMedia = "image" | "video";
 
@@ -88,6 +94,7 @@ export interface PagedResponse<T> {
   page: number;
   limit: number;
 }
+
 export interface LoginPayload {
   email: string;
   motDePasse: string;

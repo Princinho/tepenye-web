@@ -12,6 +12,7 @@ import {
   TYPES_BIEN_OPTIONS,
   PERIODES_OPTIONS,
 } from "@/lib/schemas/annonce.schema";
+import { useAuthContext } from "@/lib/AuthContext";
 import FormField from "@/components/ui/FormField";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
@@ -40,19 +41,24 @@ export default function PublierPage() {
   const [sectionActive, setSectionActive] = useState<Section>("infos");
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { utilisateur } = useAuthContext();
 
   const {
     register,
     handleSubmit,
     control,
-    watch, getValues,
+    watch,
+    getValues,
     setValue,
     formState: { errors, isValid },
   } = useForm<AnnonceFormData>({
     resolver: zodResolver(annonceSchema),
     mode: "onChange",
     defaultValues: {
+      // Valeurs par défaut explicites — reconnues comme valides dès le départ
       typeOffre: "Location",
+      typeBien: "Villa",
+      periodePaiementJours: 30,
       estMeuble: false,
       aClimatisation: false,
       aGarage: false,
@@ -65,9 +71,12 @@ export default function PublierPage() {
     },
   });
 
-  const typeOffre = watch("typeOffre");
-  const lat = watch("latitude");
-  const lng = watch("longitude");
+  // watch() est réactif — contrairement à getValues() qui est un snapshot
+  const watchedValues = watch();
+  const typeOffre = watchedValues.typeOffre;
+  const lat = watchedValues.latitude;
+  const lng = watchedValues.longitude;
+
   const indexActuel = SECTIONS.findIndex((s) => s.id === sectionActive);
   const estDerniereSection = sectionActive === DERNIERE_SECTION;
 
@@ -99,7 +108,7 @@ export default function PublierPage() {
         typeBien: data.typeBien,
         typeOffre: data.typeOffre,
         statutAnnonce: "Active",
-        adresse: `${data.adresse}`,
+        adresse: data.adresse,
         quartier: data.quartier,
         localisation: { lat: data.latitude, lng: data.longitude },
         nombrePieces: data.nombrePieces,
@@ -113,7 +122,8 @@ export default function PublierPage() {
         dateExpiration: new Date(
           Date.now() + 14 * 24 * 60 * 60 * 1000
         ).toISOString(),
-        auteurId: "u1",
+        // Auteur = utilisateur connecté, jamais hardcodé
+        auteurId: utilisateur?.id ?? "",
         medias: photoUrls,
         statistiques: {
           nombreVues: 0,
@@ -127,6 +137,9 @@ export default function PublierPage() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["annonces"] });
+      queryClient.invalidateQueries({
+        queryKey: ["annonces", "agent", utilisateur?.id],
+      });
       router.push(`/annonces/${data.id}`);
     },
   });
@@ -135,10 +148,10 @@ export default function PublierPage() {
     mutation.mutate(data);
   };
 
-  // Indicateur d'erreur par section
-  // Une section est complète si tous ses champs obligatoires sont remplis ET sans erreur
+  // ── sectionEstComplete ────────────────────────────────────────────────────
+  // Utilise watchedValues (réactif) plutôt que getValues() (snapshot)
+  // pour que les selects avec defaultValues soient reconnus comme valides
   const sectionEstComplete = (id: Section): boolean => {
-    const values = getValues();
     switch (id) {
       case "infos":
         return (
@@ -146,50 +159,51 @@ export default function PublierPage() {
           !errors.description &&
           !errors.typeBien &&
           !errors.typeOffre &&
-          !!values.titre &&
-          values.titre.length >= 10 &&
-          !!values.description &&
-          values.description.length >= 30 &&
-          !!values.typeBien &&
-          !!values.typeOffre
+          !!watchedValues.titre &&
+          watchedValues.titre.length >= 10 &&
+          !!watchedValues.description &&
+          watchedValues.description.length >= 30 &&
+          // typeBien et typeOffre ont des defaultValues → toujours définis
+          !!watchedValues.typeBien &&
+          !!watchedValues.typeOffre
         );
       case "prix":
         return (
           !errors.prix &&
           !errors.periodePaiementJours &&
-          !!values.prix &&
-          values.prix > 0 &&
-          !!values.periodePaiementJours &&
-          values.periodePaiementJours > 0
+          !!watchedValues.prix &&
+          watchedValues.prix > 0 &&
+          !!watchedValues.periodePaiementJours &&
+          watchedValues.periodePaiementJours > 0
         );
       case "localisation":
         return (
           !errors.adresse &&
           !errors.quartier &&
-          !!values.adresse &&
-          values.adresse.length >= 5 &&
-          !!values.quartier &&
-          values.quartier.length >= 2
+          !!watchedValues.adresse &&
+          watchedValues.adresse.length >= 5 &&
+          !!watchedValues.quartier &&
+          watchedValues.quartier.length >= 2
         );
       case "gps":
         return (
           !errors.latitude &&
           !errors.longitude &&
-          !!values.latitude &&
-          !!values.longitude
+          !!watchedValues.latitude &&
+          !!watchedValues.longitude
         );
       case "caracteristiques":
         return (
           !errors.nombrePieces &&
           !errors.nombreSanitaires &&
-          values.nombrePieces >= 0 &&
-          values.nombreSanitaires >= 0
+          (watchedValues.nombrePieces ?? 0) >= 0 &&
+          (watchedValues.nombreSanitaires ?? 0) >= 0
         );
       case "photos":
         return (
           !errors.photos &&
-          !!values.photos &&
-          values.photos.length >= 4
+          !!watchedValues.photos &&
+          watchedValues.photos.length >= 4
         );
       default:
         return false;
@@ -226,36 +240,36 @@ export default function PublierPage() {
           Étape {indexActuel + 1} sur {SECTIONS.length} —{" "}
           {SECTIONS[indexActuel].label}
         </p>
-        {/* Barre de progression */}
         <div className="mt-3 h-1.5 bg-gray-100 rounded-full overflow-hidden">
           <div
             className="h-full bg-emerald-500 rounded-full transition-all duration-300"
-            style={{ width: `${((indexActuel + 1) / SECTIONS.length) * 100}%` }}
+            style={{
+              width: `${((indexActuel + 1) / SECTIONS.length) * 100}%`,
+            }}
           />
         </div>
       </div>
 
       {/* Navigation sections */}
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-        {SECTIONS.map((section, index) => (
+        {SECTIONS.map((section) => (
           <button
             key={section.id}
             type="button"
             onClick={() => setSectionActive(section.id)}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex-shrink-0 ${sectionActive === section.id
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
+              sectionActive === section.id
                 ? "bg-emerald-600 text-white"
                 : sectionEstComplete(section.id)
-                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                  : "bg-white border border-gray-200 text-gray-500 hover:border-emerald-300"
-              }`}
+                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                : "bg-white border border-gray-200 text-gray-500 hover:border-emerald-300"
+            }`}
           >
             <span>{section.icon}</span>
             {section.label}
-            {/* Erreur */}
             {sectionHasError(section.id) && (
               <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
             )}
-            {/* Complète et sans erreur */}
             {sectionEstComplete(section.id) && !sectionHasError(section.id) && (
               <span className="text-emerald-500 flex-shrink-0">✓</span>
             )}
@@ -266,7 +280,7 @@ export default function PublierPage() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
 
-          {/* ===== SECTION INFOS ===== */}
+          {/* ── SECTION INFOS ─────────────────────────────────────────────── */}
           {sectionActive === "infos" && (
             <div className="space-y-5">
               <h2 className="text-base font-medium text-gray-800 pb-2 border-b border-gray-100">
@@ -284,11 +298,11 @@ export default function PublierPage() {
                   {...register("description")}
                   rows={5}
                   placeholder="Décrivez votre bien : état, environnement, points forts..."
-                  className={`w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition-colors resize-none
-                    ${errors.description
+                  className={`w-full px-3 py-2.5 text-sm border rounded-lg outline-none transition-colors resize-none ${
+                    errors.description
                       ? "border-red-300 focus:border-red-500 bg-red-50"
                       : "border-gray-200 focus:border-emerald-500"
-                    }`}
+                  }`}
                 />
               </FormField>
               <div className="grid grid-cols-2 gap-4">
@@ -300,7 +314,6 @@ export default function PublierPage() {
                       <Select
                         {...field}
                         options={TYPES_BIEN_OPTIONS}
-                        placeholder="Sélectionner..."
                         error={!!errors.typeBien}
                       />
                     )}
@@ -326,7 +339,7 @@ export default function PublierPage() {
             </div>
           )}
 
-          {/* ===== SECTION PRIX ===== */}
+          {/* ── SECTION PRIX ──────────────────────────────────────────────── */}
           {sectionActive === "prix" && (
             <div className="space-y-5">
               <h2 className="text-base font-medium text-gray-800 pb-2 border-b border-gray-100">
@@ -354,7 +367,6 @@ export default function PublierPage() {
                             ? [{ label: "Prix total (Paiement unique)", value: 365 }]
                             : PERIODES_OPTIONS
                         }
-                        placeholder="Sélectionner..."
                         error={!!errors.periodePaiementJours}
                       />
                     )}
@@ -363,11 +375,7 @@ export default function PublierPage() {
               </div>
               {typeOffre === "Location" && (
                 <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    label="Montant avance (FCFA)"
-                    error={errors.montantAvance?.message}
-                    hint="Avance sur loyer exigée"
-                  >
+                  <FormField label="Montant avance (FCFA)" error={errors.montantAvance?.message} hint="Avance sur loyer exigée">
                     <Input
                       {...register("montantAvance", { valueAsNumber: true })}
                       type="number"
@@ -375,11 +383,7 @@ export default function PublierPage() {
                       error={!!errors.montantAvance}
                     />
                   </FormField>
-                  <FormField
-                    label="Montant caution (FCFA)"
-                    error={errors.montantCaution?.message}
-                    hint="Caution remboursable"
-                  >
+                  <FormField label="Montant caution (FCFA)" error={errors.montantCaution?.message} hint="Caution remboursable">
                     <Input
                       {...register("montantCaution", { valueAsNumber: true })}
                       type="number"
@@ -395,7 +399,7 @@ export default function PublierPage() {
             </div>
           )}
 
-          {/* ===== SECTION ADRESSE ===== */}
+          {/* ── SECTION ADRESSE ───────────────────────────────────────────── */}
           {sectionActive === "localisation" && (
             <div className="space-y-5">
               <h2 className="text-base font-medium text-gray-800 pb-2 border-b border-gray-100">
@@ -408,12 +412,7 @@ export default function PublierPage() {
                   error={!!errors.quartier}
                 />
               </FormField>
-              <FormField
-                label="Adresse"
-                error={errors.adresse?.message}
-                required
-                hint="L'adresse exacte sera visible uniquement après contact avec vous"
-              >
+              <FormField label="Adresse" error={errors.adresse?.message} required hint="L'adresse exacte sera visible uniquement après contact avec vous">
                 <Input
                   {...register("adresse")}
                   placeholder="Ex: Rue du Commerce, derrière la pharmacie..."
@@ -423,14 +422,14 @@ export default function PublierPage() {
             </div>
           )}
 
-          {/* ===== SECTION GPS ===== */}
+          {/* ── SECTION GPS ───────────────────────────────────────────────── */}
           {sectionActive === "gps" && (
             <div className="space-y-5">
               <h2 className="text-base font-medium text-gray-800 pb-2 border-b border-gray-100">
                 Localisation GPS
               </h2>
               <p className="text-sm text-gray-500">
-                Cliquez sur la carte pour positionner précisément votre bien. Cette position sera utilisée pour la recherche par proximité.
+                Cliquez sur la carte pour positionner précisément votre bien.
               </p>
               <LocalisationPicker
                 lat={lat ?? null}
@@ -444,7 +443,7 @@ export default function PublierPage() {
             </div>
           )}
 
-          {/* ===== SECTION CARACTÉRISTIQUES ===== */}
+          {/* ── SECTION CARACTÉRISTIQUES ──────────────────────────────────── */}
           {sectionActive === "caracteristiques" && (
             <div className="space-y-5">
               <h2 className="text-base font-medium text-gray-800 pb-2 border-b border-gray-100">
@@ -469,11 +468,7 @@ export default function PublierPage() {
                     error={!!errors.nombreSanitaires}
                   />
                 </FormField>
-                <FormField
-                  label="Étage"
-                  error={errors.etage?.message}
-                  hint="Vide si plain-pied"
-                >
+                <FormField label="Étage" error={errors.etage?.message} hint="Vide si plain-pied">
                   <Input
                     {...register("etage", {
                       setValueAs: (v) => (v === "" ? null : Number(v)),
@@ -488,16 +483,15 @@ export default function PublierPage() {
               </div>
               <div className="space-y-3 pt-2">
                 <p className="text-sm font-medium text-gray-700">Équipements</p>
-                {[
-                  { name: "estMeuble" as const, label: "Meublé" },
-                  { name: "aClimatisation" as const, label: "Climatisation" },
-                  { name: "aGarage" as const, label: "Garage" },
-                  { name: "masquerTelephone" as const, label: "Masquer mon numéro de téléphone" },
-                ].map((option) => (
-                  <label
-                    key={option.name}
-                    className="flex items-center gap-3 cursor-pointer group"
-                  >
+                {(
+                  [
+                    { name: "estMeuble" as const, label: "Meublé" },
+                    { name: "aClimatisation" as const, label: "Climatisation" },
+                    { name: "aGarage" as const, label: "Garage" },
+                    { name: "masquerTelephone" as const, label: "Masquer mon numéro de téléphone" },
+                  ] as const
+                ).map((option) => (
+                  <label key={option.name} className="flex items-center gap-3 cursor-pointer group">
                     <input
                       type="checkbox"
                       {...register(option.name)}
@@ -512,7 +506,7 @@ export default function PublierPage() {
             </div>
           )}
 
-          {/* ===== SECTION PHOTOS ===== */}
+          {/* ── SECTION PHOTOS ────────────────────────────────────────────── */}
           {sectionActive === "photos" && (
             <div className="space-y-5">
               <h2 className="text-base font-medium text-gray-800 pb-2 border-b border-gray-100">
@@ -535,7 +529,7 @@ export default function PublierPage() {
 
         {/* Footer navigation */}
         <div className="flex items-center justify-between mt-6">
-          <div className="flex gap-2">
+          <div>
             {indexActuel > 0 && (
               <button
                 type="button"
@@ -548,7 +542,6 @@ export default function PublierPage() {
           </div>
 
           <div className="flex gap-3">
-            {/* Bouton Suivant — visible sur toutes les sections sauf la dernière */}
             {!estDerniereSection && (
               <button
                 type="button"
@@ -559,27 +552,26 @@ export default function PublierPage() {
               </button>
             )}
 
-            {/* Bouton Publier — visible UNIQUEMENT sur la dernière section */}
             {estDerniereSection && (
               <button
                 type="submit"
                 disabled={!isValid || mutation.isPending}
-                className={`px-6 py-2.5 text-sm font-medium rounded-lg transition-colors ${isValid
-                  ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  }`}
+                className={`px-6 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                  isValid
+                    ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                }`}
               >
                 {mutation.isPending
                   ? "Publication en cours..."
                   : !isValid
-                    ? "Formulaire incomplet"
-                    : "Publier l'annonce ✓"}
+                  ? "Formulaire incomplet"
+                  : "Publier l'annonce ✓"}
               </button>
             )}
           </div>
         </div>
 
-        {/* Erreur globale */}
         {mutation.isError && (
           <div className="mt-4 p-4 bg-red-50 border border-red-100 rounded-lg">
             <p className="text-sm text-red-600">
