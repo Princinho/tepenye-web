@@ -14,10 +14,7 @@
       "statutAnnonce": "Active",
       "adresse": "Bè Kpota, Lomé",
       "quartier": "Bè Kpota",
-      "localisation": {
-        "lat": 6.1319,
-        "lng": 1.2228
-      },
+      "localisation": { "lat": 6.1319, "lng": 1.2228 },
       "nombrePieces": 4,
       "nombreSanitaires": 2,
       "estMeuble": false,
@@ -29,36 +26,12 @@
       "dateExpiration": "2026-04-01T08:00:00Z",
       "auteurId": "u1",
       "medias": [
-        {
-          "id": "m1",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m2",
-          "url": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m3",
-          "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m4",
-          "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
+        { "id": "m1", "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800", "typeMedia": "image", "ordreAffichage": 1 },
+        { "id": "m2", "url": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800", "typeMedia": "image", "ordreAffichage": 2 },
+        { "id": "m3", "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800", "typeMedia": "image", "ordreAffichage": 3 },
+        { "id": "m4", "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800", "typeMedia": "image", "ordreAffichage": 4 }
       ],
-      "statistiques": {
-        "nombreVues": 142,
-        "nombreFavoris": 8,
-        "nombreClicsContact": 12
-      }
+      "statistiques": { "nombreVues": 142, "nombreFavoris": 8, "nombreClicsContact": 12 }
     },
     {
       "id": "2",
@@ -74,10 +47,7 @@
       "statutAnnonce": "Active",
       "adresse": "Tokoin, Lomé",
       "quartier": "Tokoin",
-      "localisation": {
-        "lat": 6.1499,
-        "lng": 1.2313
-      },
+      "localisation": { "lat": 6.1499, "lng": 1.2313 },
       "nombrePieces": 1,
       "nombreSanitaires": 1,
       "estMeuble": true,
@@ -89,36 +59,12 @@
       "dateExpiration": "2026-04-05T08:00:00Z",
       "auteurId": "u2",
       "medias": [
-        {
-          "id": "m5",
-          "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m6",
-          "url": "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m7",
-          "url": "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m8",
-          "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
+        { "id": "m5", "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800", "typeMedia": "image", "ordreAffichage": 1 },
+        { "id": "m6", "url": "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800", "typeMedia": "image", "ordreAffichage": 2 },
+        { "id": "m7", "url": "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800", "typeMedia": "image", "ordreAffichage": 3 },
+        { "id": "m8", "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800", "typeMedia": "image", "ordreAffichage": 4 }
       ],
-      "statistiques": {
-        "nombreVues": 89,
-        "nombreFavoris": 5,
-        "nombreClicsContact": 7
-      }
+      "statistiques": { "nombreVues": 89, "nombreFavoris": 5, "nombreClicsContact": 7 }
     },
     {
       "id": "3",
@@ -134,10 +80,7 @@
       "statutAnnonce": "Active",
       "adresse": "Agbalépédogan, Lomé",
       "quartier": "Agbalépédogan",
-      "localisation": {
-        "lat": 6.1654,
-        "lng": 1.2156
-      },
+      "localisation": { "lat": 6.1654, "lng": 1.2156 },
       "nombrePieces": 3,
       "nombreSanitaires": 1,
       "estMeuble": false,
@@ -149,36 +92,12 @@
       "dateExpiration": "2026-04-10T08:00:00Z",
       "auteurId": "u1",
       "medias": [
-        {
-          "id": "m9",
-          "url": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m10",
-          "url": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m11",
-          "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m12",
-          "url": "https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
+        { "id": "m9", "url": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800", "typeMedia": "image", "ordreAffichage": 1 },
+        { "id": "m10", "url": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800", "typeMedia": "image", "ordreAffichage": 2 },
+        { "id": "m11", "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800", "typeMedia": "image", "ordreAffichage": 3 },
+        { "id": "m12", "url": "https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800", "typeMedia": "image", "ordreAffichage": 4 }
       ],
-      "statistiques": {
-        "nombreVues": 203,
-        "nombreFavoris": 14,
-        "nombreClicsContact": 19
-      }
+      "statistiques": { "nombreVues": 203, "nombreFavoris": 14, "nombreClicsContact": 19 }
     },
     {
       "id": "4",
@@ -194,10 +113,7 @@
       "statutAnnonce": "Active",
       "adresse": "Adidogomé, Lomé",
       "quartier": "Adidogomé",
-      "localisation": {
-        "lat": 6.2012,
-        "lng": 1.1889
-      },
+      "localisation": { "lat": 6.2012, "lng": 1.1889 },
       "nombrePieces": 0,
       "nombreSanitaires": 0,
       "estMeuble": false,
@@ -209,36 +125,12 @@
       "dateExpiration": "2026-04-12T08:00:00Z",
       "auteurId": "u3",
       "medias": [
-        {
-          "id": "m13",
-          "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m14",
-          "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m15",
-          "url": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m16",
-          "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
+        { "id": "m13", "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800", "typeMedia": "image", "ordreAffichage": 1 },
+        { "id": "m14", "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800", "typeMedia": "image", "ordreAffichage": 2 },
+        { "id": "m15", "url": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800", "typeMedia": "image", "ordreAffichage": 3 },
+        { "id": "m16", "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800", "typeMedia": "image", "ordreAffichage": 4 }
       ],
-      "statistiques": {
-        "nombreVues": 67,
-        "nombreFavoris": 3,
-        "nombreClicsContact": 5
-      }
+      "statistiques": { "nombreVues": 67, "nombreFavoris": 3, "nombreClicsContact": 5 }
     },
     {
       "id": "5",
@@ -254,10 +146,7 @@
       "statutAnnonce": "Active",
       "adresse": "Hédzranawoé, Lomé",
       "quartier": "Hédzranawoé",
-      "localisation": {
-        "lat": 6.1423,
-        "lng": 1.1956
-      },
+      "localisation": { "lat": 6.1423, "lng": 1.1956 },
       "nombrePieces": 2,
       "nombreSanitaires": 1,
       "estMeuble": true,
@@ -269,216 +158,12 @@
       "dateExpiration": "2026-04-15T08:00:00Z",
       "auteurId": "u2",
       "medias": [
-        {
-          "id": "m17",
-          "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m18",
-          "url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m19",
-          "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m20",
-          "url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
+        { "id": "m17", "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800", "typeMedia": "image", "ordreAffichage": 1 },
+        { "id": "m18", "url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800", "typeMedia": "image", "ordreAffichage": 2 },
+        { "id": "m19", "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800", "typeMedia": "image", "ordreAffichage": 3 },
+        { "id": "m20", "url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800", "typeMedia": "image", "ordreAffichage": 4 }
       ],
-      "statistiques": {
-        "nombreVues": 45,
-        "nombreFavoris": 2,
-        "nombreClicsContact": 3
-      }
-    },
-    {
-      "id": "1774685995637",
-      "titre": "2 Chambres Salon",
-      "description": "2 Chambres Salon a Agoe Cacaveli",
-      "prix": 75000,
-      "periodePaiementJours": 30,
-      "prixMensuelNormalise": 75000,
-      "montantAvance": 300000,
-      "montantCaution": 0,
-      "typeBien": "Appartement",
-      "typeOffre": "Location",
-      "statutAnnonce": "Active",
-      "adresse": "Pres de la pharmacie lumiere, Lomé",
-      "quartier": "Agoe Cacaveli",
-      "localisation": {
-        "lat": 6.1375,
-        "lng": 1.2123
-      },
-      "nombrePieces": 2,
-      "nombreSanitaires": 2,
-      "estMeuble": false,
-      "aClimatisation": true,
-      "aGarage": true,
-      "etage": null,
-      "masquerTelephone": false,
-      "datePublication": "2026-03-28T08:19:55.637Z",
-      "dateExpiration": "2026-04-11T08:19:55.637Z",
-      "auteurId": "u1",
-      "medias": [
-        {
-          "id": "m1774685995637-0",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m1774685995637-1",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m1774685995637-2",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m1774685995637-3",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
-      ],
-      "statistiques": {
-        "nombreVues": 0,
-        "nombreFavoris": 0,
-        "nombreClicsContact": 0
-      }
-    },
-    {
-      "id": "1774701204114",
-      "titre": "2 Chambres Salon",
-      "description": "98auiedspq43p8-9084ht0q80324w7803q74",
-      "prix": 12500,
-      "periodePaiementJours": 7,
-      "prixMensuelNormalise": 53571.42857142857,
-      "montantAvance": 0,
-      "montantCaution": 0,
-      "typeBien": "Studio",
-      "typeOffre": "Location",
-      "statutAnnonce": "Active",
-      "adresse": "Tokoin",
-      "quartier": "Tokoin",
-      "localisation": {
-        "lat": 6.1418991947200094,
-        "lng": 1.2182566467227796
-      },
-      "nombrePieces": 1,
-      "nombreSanitaires": 1,
-      "estMeuble": false,
-      "aClimatisation": true,
-      "aGarage": true,
-      "etage": 0,
-      "masquerTelephone": false,
-      "datePublication": "2026-03-28T12:33:24.115Z",
-      "dateExpiration": "2026-04-15T15:14:47.674Z",
-      "auteurId": "u1774853775942",
-      "medias": [
-        {
-          "id": "m1774701204114-0",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m1774701204114-1",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m1774701204114-2",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m1774701204114-3",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
-      ],
-      "statistiques": {
-        "nombreVues": 0,
-        "nombreFavoris": 0,
-        "nombreClicsContact": 0
-      }
-    },
-    {
-      "id": "1775029331432",
-      "titre": "Mini villa Attiegou",
-      "description": "Belle villa dallee a attiegou au bord du contournement pres de l'ecole la raison",
-      "prix": 95000,
-      "periodePaiementJours": 30,
-      "prixMensuelNormalise": 95000,
-      "montantAvance": 300000,
-      "montantCaution": 300000,
-      "typeBien": "Maison",
-      "typeOffre": "Location",
-      "statutAnnonce": "Active",
-      "adresse": "Pres de l'ecole la raison",
-      "quartier": "Attiegou",
-      "localisation": {
-        "lat": 6.1953966853067355,
-        "lng": 1.2696104657263296
-      },
-      "nombrePieces": 3,
-      "nombreSanitaires": 3,
-      "estMeuble": true,
-      "aClimatisation": false,
-      "aGarage": true,
-      "etage": 0,
-      "masquerTelephone": false,
-      "datePublication": "2026-04-01T07:42:11.432Z",
-      "dateExpiration": "2026-04-15T07:42:11.432Z",
-      "auteurId": "u1",
-      "medias": [
-        {
-          "id": "m1775029331432-0",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 1
-        },
-        {
-          "id": "m1775029331432-1",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 2
-        },
-        {
-          "id": "m1775029331432-2",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 3
-        },
-        {
-          "id": "m1775029331432-3",
-          "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-          "typeMedia": "image",
-          "ordreAffichage": 4
-        }
-      ],
-      "statistiques": {
-        "nombreVues": 0,
-        "nombreFavoris": 0,
-        "nombreClicsContact": 0
-      }
+      "statistiques": { "nombreVues": 45, "nombreFavoris": 2, "nombreClicsContact": 3 }
     }
   ],
   "utilisateurs": [
@@ -489,7 +174,7 @@
       "telephone": "+22890112233",
       "typeUtilisateur": "Agent",
       "estVerifie": true,
-      "soldeCredits": 42,
+      "soldeCredits": 45,
       "abonne": false,
       "dateInscription": "2025-12-01T00:00:00Z"
     },
@@ -500,7 +185,7 @@
       "telephone": "+22891223344",
       "typeUtilisateur": "Agent",
       "estVerifie": true,
-      "soldeCredits": 11,
+      "soldeCredits": 12,
       "abonne": false,
       "dateInscription": "2026-01-15T00:00:00Z"
     },
@@ -514,92 +199,11 @@
       "soldeCredits": 120,
       "abonne": true,
       "dateInscription": "2025-11-10T00:00:00Z"
-    },
-    {
-      "id": "u1774852680021",
-      "nom": "Gatien GNAKOU",
-      "email": "princegnakou@gmail.com",
-      "telephone": "",
-      "typeUtilisateur": "Client",
-      "estVerifie": false,
-      "soldeCredits": 10,
-      "abonne": false,
-      "dateInscription": "2026-03-30T06:38:00.021Z"
-    },
-    {
-      "id": "u1774853775942",
-      "nom": "Gatien Gnakou",
-      "email": "princinho94@gmail.com",
-      "telephone": "",
-      "typeUtilisateur": "Agent",
-      "estVerifie": false,
-      "soldeCredits": 10,
-      "abonne": false,
-      "dateInscription": "2026-03-30T06:56:42.023Z"
     }
   ],
   "favoris": [],
-  "messages": [
-    {
-      "id": "msg1774941893507",
-      "annonceId": "1",
-      "expediteurId": "u1774853775942",
-      "contenu": "Hello! Est-ce disponible?",
-      "envoyeLe": "2026-03-31T07:24:53.507Z",
-      "estLu": false,
-      "dateLecture": null,
-      "supprimeParExpediteur": false,
-      "supprimeParDestinataire": false
-    },
-    {
-      "id": "msg1774942780292",
-      "annonceId": "1",
-      "expediteurId": "u1774853775942",
-      "contenu": "aseaasdasd",
-      "envoyeLe": "2026-03-31T07:39:40.292Z",
-      "estLu": false,
-      "dateLecture": null,
-      "supprimeParExpediteur": false,
-      "supprimeParDestinataire": false
-    }
-  ],
-  "transactions_credits": [
-    {
-      "id": "tx1774942651122",
-      "utilisateurId": "u1",
-      "montant": -1,
-      "type": "Consommation",
-      "motif": "Affichage numéro client",
-      "annonceId": "1",
-      "date": "2026-03-31T07:37:31.122Z"
-    },
-    {
-      "id": "tx1774942749290",
-      "utilisateurId": "u1",
-      "montant": -1,
-      "type": "Consommation",
-      "motif": "Affichage numéro client",
-      "annonceId": "1",
-      "date": "2026-03-31T07:39:09.290Z"
-    },
-    {
-      "id": "tx1774943202952",
-      "utilisateurId": "u1",
-      "montant": -1,
-      "type": "Consommation",
-      "motif": "Affichage numéro client",
-      "annonceId": "1",
-      "date": "2026-03-31T07:46:42.952Z"
-    },
-    {
-      "id": "tx1774943228943",
-      "utilisateurId": "u2",
-      "montant": -1,
-      "type": "Consommation",
-      "motif": "Affichage numéro client",
-      "annonceId": "2",
-      "date": "2026-03-31T07:47:08.943Z"
-    }
-  ],
+  "messages": [],
+  "transactions_credits": [],
+  "alertes": [],
   "sessions": []
 }

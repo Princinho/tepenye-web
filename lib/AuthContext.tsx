@@ -1,17 +1,5 @@
 "use client";
 
-/**
- * AuthContext — Tepenye
- *
- * Fusionne next-auth (Google OAuth + Credentials) avec l'état local
- * déjà utilisé dans tout le projet (utilisateur, token, estConnecte).
- *
- * Stratégie :
- *  - Si une session next-auth est active → on l'utilise comme source de vérité
- *  - Sinon → on tombe sur le localStorage (connexion email simulée avant next-auth)
- *  - login() / logout() restent disponibles pour la compat avec le reste du code
- */
-
 import {
   createContext,
   useContext,
@@ -24,6 +12,24 @@ import type { Utilisateur, AuthState } from "@/types";
 
 const TOKEN_KEY = "tepenye_token";
 const USER_KEY = "tepenye_user";
+
+// Durée du cookie : 30 jours (en secondes)
+const COOKIE_MAX_AGE = 30 * 24 * 60 * 60;
+
+/**
+ * Écrit le token dans un cookie accessible par le middleware Next.js.
+ * SameSite=Lax : protège contre CSRF tout en autorisant les navigations normales.
+ * Pas httpOnly (doit être lisible par le middleware Edge côté serveur ET par JS).
+ *
+ * Note : en production, ajouter Secure; pour forcer HTTPS.
+ */
+function setCookieToken(token: string) {
+  document.cookie = `${TOKEN_KEY}=${token}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+}
+
+function clearCookieToken() {
+  document.cookie = `${TOKEN_KEY}=; path=/; max-age=0; SameSite=Lax`;
+}
 
 interface AuthContextType extends AuthState {
   login: (utilisateur: Utilisateur, token: string) => void;
@@ -58,12 +64,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         token: session.token,
         estConnecte: true,
       });
-      // Synchronise aussi le localStorage pour que api.ts (axios interceptor) ait le token
       localStorage.setItem(TOKEN_KEY, session.token);
-      localStorage.setItem(
-        USER_KEY,
-        JSON.stringify(session.utilisateur)
-      );
+      localStorage.setItem(USER_KEY, JSON.stringify(session.utilisateur));
+      // Écrit aussi le cookie pour le middleware
+      setCookieToken(session.token);
       return;
     }
 
@@ -74,6 +78,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const utilisateur = JSON.parse(userStr) as Utilisateur;
         setAuth({ utilisateur, token, estConnecte: true });
+        // Re-sync du cookie au cas où il aurait expiré
+        setCookieToken(token);
         return;
       } catch {
         localStorage.removeItem(TOKEN_KEY);
@@ -81,7 +87,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    // Aucune auth trouvée
     setAuth({ utilisateur: null, token: null, estConnecte: false });
   }, [session, status]);
 
@@ -91,15 +96,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback((utilisateur: Utilisateur, token: string) => {
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(USER_KEY, JSON.stringify(utilisateur));
+    setCookieToken(token);
     setAuth({ utilisateur, token, estConnecte: true });
   }, []);
 
-  /** Déconnexion : efface la session next-auth ET le localStorage */
+  /** Déconnexion : efface session next-auth, localStorage ET cookie */
   const logout = useCallback(async () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+    clearCookieToken();
     setAuth({ utilisateur: null, token: null, estConnecte: false });
-    // Déconnecte la session next-auth si elle existe (Google, etc.)
     await signOut({ redirect: false });
   }, []);
 

@@ -475,23 +475,7 @@ export default function LoginPage() {
                   )}
                 </button>
 
-                <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
-                  <p className="text-xs text-amber-600">
-                    ⚙️ Nécessite{" "}
-                    <code className="font-mono bg-amber-100 px-1 rounded">
-                      GOOGLE_CLIENT_ID
-                    </code>{" "}
-                    et{" "}
-                    <code className="font-mono bg-amber-100 px-1 rounded">
-                      GOOGLE_CLIENT_SECRET
-                    </code>{" "}
-                    dans{" "}
-                    <code className="font-mono bg-amber-100 px-1 rounded">
-                      .env.local
-                    </code>
-                    .
-                  </p>
-                </div>
+               
               </div>
             )}
 

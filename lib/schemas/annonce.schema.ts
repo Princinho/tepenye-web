@@ -1,15 +1,49 @@
 import { z } from "zod";
 
-export const annonceSchema = z.object({
-  titre: z
-    .string()
-    .min(10, "Le titre doit contenir au moins 10 caractères")
-    .max(100, "Le titre ne peut pas dépasser 100 caractères"),
+// ─── Détection de numéros de téléphone ───────────────────────────────────────
 
-  description: z
-    .string()
-    .min(30, "La description doit contenir au moins 30 caractères")
-    .max(1000, "La description ne peut pas dépasser 1000 caractères"),
+const REGEX_TELEPHONE =
+  /(\+\d{1,3}[\s.-]?)?\(?\d{2,4}\)?[\s.-]?\d{2,4}[\s.-]?\d{2,4}[\s.-]?\d{0,4}/;
+
+/**
+ * Vérifie qu'une séquence de chiffres extraite a au moins 8 chiffres
+ * (pour éviter les faux positifs sur des années, superficies, etc.)
+ */
+function contientNumeroTelephone(valeur: string): boolean {
+  const matches = valeur.match(REGEX_TELEPHONE);
+  if (!matches) return false;
+  // Compte uniquement les chiffres du match — 8+ chiffres = numéro de téléphone
+  const chiffres = matches[0].replace(/\D/g, "");
+  return chiffres.length >= 8;
+}
+
+const MSG_TELEPHONE =
+  "Vous ne pouvez pas insérer de numéro de téléphone ici. Utilisez l'option « Voir le numéro » pour que les clients vous contactent.";
+
+/** Raffinement zod réutilisable anti-téléphone */
+function sansNumeroTelephone<T extends z.ZodString>(schema: T) {
+  return schema.refine(
+    (val) => !contientNumeroTelephone(val),
+    { message: MSG_TELEPHONE }
+  );
+}
+
+// ─── Schéma principal ─────────────────────────────────────────────────────────
+
+export const annonceSchema = z.object({
+  titre: sansNumeroTelephone(
+    z
+      .string()
+      .min(10, "Le titre doit contenir au moins 10 caractères")
+      .max(100, "Le titre ne peut pas dépasser 100 caractères")
+  ),
+
+  description: sansNumeroTelephone(
+    z
+      .string()
+      .min(30, "La description doit contenir au moins 30 caractères")
+      .max(1000, "La description ne peut pas dépasser 1000 caractères")
+  ),
 
   typeBien: z.enum(
     ["Villa", "Maison", "Appartement", "Studio", "Bureau", "Terrain"],
@@ -36,30 +70,32 @@ export const annonceSchema = z.object({
     .number({ error: "Montant invalide" })
     .min(0, "Le montant ne peut pas être négatif"),
 
-  adresse: z.string().min(5, "Veuillez entrer une adresse valide"),
+  adresse: sansNumeroTelephone(
+    z.string().min(5, "Veuillez entrer une adresse valide")
+  ),
 
-  quartier: z.string().min(2, "Veuillez entrer un quartier valide"),
+  quartier: sansNumeroTelephone(
+    z.string().min(2, "Veuillez entrer un quartier valide")
+  ),
 
-  // Coordonnées GPS — obligatoires
   latitude: z
     .number({ error: "Veuillez placer le marqueur sur la carte" })
-    .min(-90).max(90),
+    .min(-90)
+    .max(90),
 
   longitude: z
     .number({ error: "Veuillez placer le marqueur sur la carte" })
-    .min(-180).max(180),
+    .min(-180)
+    .max(180),
 
-  nombrePieces: z
-    .number({ error: "Valeur invalide" })
-    .min(0).max(20),
+  nombrePieces: z.number({ error: "Valeur invalide" }).min(0).max(20),
 
-  nombreSanitaires: z
-    .number({ error: "Valeur invalide" })
-    .min(0).max(20),
+  nombreSanitaires: z.number({ error: "Valeur invalide" }).min(0).max(20),
 
   etage: z
     .number({ error: "Valeur invalide" })
-    .min(0).max(50)
+    .min(0)
+    .max(50)
     .nullable()
     .optional(),
 
